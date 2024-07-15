@@ -4,5 +4,5 @@ My personal nixos config using [flakes](https://nixos.wiki/wiki/Flakes) and [hom
 # Setup
 1. `cd ~/.config`
 2. Clone the repo
-3. `ln -s ~/.config/nixos /etc/nixos`
+3. `sudo ln -s ~/.config/nixos /etc/nixos`
 4. `sudo nixos-rebuild switch`
