@@ -88,6 +88,9 @@
     packages = with pkgs; [
     #  thunderbird
     ];
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtaVhLcAEGvSMnXER122dciG0HQyZG4SPxAGT6goELzh3Oobd4dZn/Rj2dbrTZKe6SBLQyii3EEnSUwhBEF3qGWcnmK9TLdNG2M/mS/w9A0JDY9epE0ngp1k5qkTHs/U3FxXz8ZrmtN65rwO1Wjw+frfS8pao12i5kvEVP5G+bqqXPhQg6XnggV88X3nM/a95dYb8OF4ko+3hVus6LKh00lzBfFdtLNbE04Pd9lFWpb6gQHUxM0PQr9nU4dNkIYQmoarhTkPd5YBO8UbBukbRLeviz/rwN330UjRWchZykrMwwHxFf4HuWpIwQNsQ+Bus6QKiz4erSgq6BHgAETS3dRyWFWVmY/TkC239BFWHoAoVXVHIgegwks42Wa7H2ViVKqWbkzq9cV7GRr4Lu1d32nE0a9hAS8aXo80AoUPFohasVRXttifwD9PwHs3Sf0Ki4x4YdFb3UagEgKfFM37qnd0mg/u6g7U41P0BSRXRvU5B3aClOFp+BabJ/EORB63M= alex"
+    ];
   };
 
   # Install firefox.
@@ -122,7 +125,11 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = false;
+    settings.KbdInteractiveAuthentication = false;
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
