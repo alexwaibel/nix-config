@@ -33,11 +33,15 @@
     file
     which
     tree
+    libgcc
+    gnumake
     gnused
     gnutar
     gawk
+    neovim
     zstd
     gnupg
+    xclip
 
     # nix related
     #
