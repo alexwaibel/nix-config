@@ -82,7 +82,7 @@
   users.users.alex = {
     isNormalUser = true;
     description = "Alex";
-    extraGroups = [ "networkmanager" "wheel", "systemd-journal", "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "systemd-journal" "docker" ];
     packages = with pkgs; [
     #  thunderbird
     ];
@@ -98,7 +98,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # Enable the Flakes feature and the accompanying new nix command-line tool
-  nix.settings.experimental-features = [ "nix-command" "flakes", "repl-flake" ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" "repl-flake" ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -130,7 +130,7 @@
   };
 
   # Enable QEMU guest agent.
-  virtualisation.docker.enable = true;
+  virtualisation.qemuGuest.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
