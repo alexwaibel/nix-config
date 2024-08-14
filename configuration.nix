@@ -130,7 +130,7 @@
   };
 
   # Enable QEMU guest agent.
-  virtualisation.qemuGuest.enable = true;
+  services.qemuGuest.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
