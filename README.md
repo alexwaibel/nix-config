@@ -4,7 +4,7 @@ My personal nixos config using [flakes](https://nixos.wiki/wiki/Flakes) and [hom
 # Setup (installing fresh nixos)
 1. `cd ~/.config`
 2. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
-3. `sudo cp -r ~/.config/nixos /mnt/etc/nixos`
+3. `sudo cp -r ~/.config/nixos/* /mnt/etc/nixos/`
 4. `sudo nixos-install`
    - You can set the user password afterwards with `passwd`
 
