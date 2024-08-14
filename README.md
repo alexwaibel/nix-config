@@ -3,6 +3,6 @@ My personal nixos config using [flakes](https://nixos.wiki/wiki/Flakes) and [hom
 
 # Setup
 1. `cd ~/.config`
-2. Clone the repo
+2. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
 3. `sudo ln -s ~/.config/nixos /etc/nixos`
 4. `sudo nixos-rebuild switch`
