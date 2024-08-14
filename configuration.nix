@@ -84,7 +84,7 @@
     description = "Alex";
     extraGroups = [ "networkmanager" "wheel" "systemd-journal" "docker" ];
     packages = with pkgs; [
-    #  thunderbird
+    	gnome.gnome-remote-desktop
     ];
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtaVhLcAEGvSMnXER122dciG0HQyZG4SPxAGT6goELzh3Oobd4dZn/Rj2dbrTZKe6SBLQyii3EEnSUwhBEF3qGWcnmK9TLdNG2M/mS/w9A0JDY9epE0ngp1k5qkTHs/U3FxXz8ZrmtN65rwO1Wjw+frfS8pao12i5kvEVP5G+bqqXPhQg6XnggV88X3nM/a95dYb8OF4ko+3hVus6LKh00lzBfFdtLNbE04Pd9lFWpb6gQHUxM0PQr9nU4dNkIYQmoarhTkPd5YBO8UbBukbRLeviz/rwN330UjRWchZykrMwwHxFf4HuWpIwQNsQ+Bus6QKiz4erSgq6BHgAETS3dRyWFWVmY/TkC239BFWHoAoVXVHIgegwks42Wa7H2ViVKqWbkzq9cV7GRr4Lu1d32nE0a9hAS8aXo80AoUPFohasVRXttifwD9PwHs3Sf0Ki4x4YdFb3UagEgKfFM37qnd0mg/u6g7U41P0BSRXRvU5B3aClOFp+BabJ/EORB63M= alex"
@@ -133,12 +133,19 @@
   # Enable QEMU guest agent.
   services.qemuGuest.enable = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # Enable RDP server
+  services.gnome.gnome-remote-desktop.enable = true;
+  services.xrdp.enable = true;
+  services.xrdp.defaultWindowManager = "gmone-remote-desktop";
+  services.xrdp.openFirewall = true;
 
+  # Open ports in the firewall.
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 3389 ];
+    allowedUDPPorts = [ 3389 ];
+  };
+  
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
