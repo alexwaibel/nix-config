@@ -29,6 +29,10 @@
     socat # replacement of openbsd-netcat
     nmap # A utility for network discovery and security auditing
 
+    # editors
+    neovim
+    vscode
+
     # misc
     file
     which
@@ -38,7 +42,6 @@
     gnused
     gnutar
     gawk
-    neovim
     zstd
     gnupg
     xclip
