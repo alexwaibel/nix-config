@@ -33,3 +33,9 @@ To update the entire system:
 To update an individual input, such as home-manager:
 1. `nix flake update home-manager`
 2. `sudo nixos-rebuild switch`
+
+## Debugging
+If you encounter an error when applying changes you can get more detailed error messages with:
+`sudo nixos-rebuild switch --show-trace --print-build-logs --verbose`
+> [!TIP]
+> A shorter equivalent is `sudo nixos-rebuild switch --show-trace -L -v`
