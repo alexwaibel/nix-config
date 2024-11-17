@@ -1,14 +1,10 @@
-{ config, pkgs, ... }:
+{pkgs, ...}: {
+  imports = [
+    ./fish
 
-{
-  home.username = "alex";
-  home.homeDirectory = "/home/alex";
-
-  # Packages that should be installed to the user profile.
+    ./bash.nix
+  ];
   home.packages = with pkgs; [
-    neofetch
-    nnn # terminal file manager
-
     # archives
     zip
     xz
@@ -20,6 +16,7 @@
     jq # A lightweight and flexible command-line JSON processor
     yq-go # yaml processor https://github.com/mikefarah/yq
     fzf # A command-line fuzzy finder
+    nixfmt-rfc-style # Official Nix formatter to ensure uniform style
 
     # networking tools
     mtr # A network diagnostic tool
@@ -31,7 +28,7 @@
 
     # editors
     neovim
-    vscode
+    vim
 
     # misc
     file
@@ -45,6 +42,10 @@
     zstd
     gnupg
     xclip
+    wget
+    curl
+    neofetch
+    nnn # terminal file manager
 
     # nix related
     #
@@ -71,34 +72,4 @@
     pciutils # lspci
     usbutils # lsusb
   ];
-
-  # basic configuration of git, please change to your own
-  programs.git = {
-    enable = true;
-    userName = "Alex Waibel";
-    userEmail = "alexwaibel@users.noreply.github.com";
-  };
-
-  # starship - an customizable prompt for any shell
-  programs.starship = {
-    enable = true;
-  };
-
-  programs.bash = {
-    enable = true;
-    enableCompletion = true;
- };
-
-  # This value determines the home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update home Manager without changing this value. See
-  # the home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "24.05";
-
-  # Let home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }

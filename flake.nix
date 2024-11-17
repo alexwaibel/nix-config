@@ -10,24 +10,45 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        # Import the previous configuration.nix we used,
-        # so the old configuration file still takes effect
-        ./configuration.nix
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    systems,
+    ...
+  } @ inputs: let
+    inherit (self) outputs;
+    lib = nixpkgs.lib // home-manager.lib;
+    forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+    pkgsFor = lib.genAttrs (import systems) (
+      system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        }
+    );
+  in {
+    inherit lib;
+    
+    nixosConfigurations = {
+      # Devbox VM
+      devbox = lib.nixosSystem {
+        modules = [./hosts/devbox];
+        specialArgs = {
+          inherit inputs outputs;
+        };
+      };
+    };
 
-      	# Make home-manager a nixos module
-      	# so that home-manager config is deployed automatically when executing `nixos-rebuild switch`
-      	home-manager.nixosModules.home-manager
-      	{
-      	  home-manager.useGlobalPkgs = true;
-      	  home-manager.useUserPackages = true;
-      
-      	  home-manager.users.alex = import ./home.nix;
-      	}
-      ];
+    homeConfigurations = {
+      # devbox
+      "alex@devbox" = lib.homeManagerConfiguration {
+        modules = [./home/alex/devbox.nix];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
     };
   };
 }
