@@ -4,6 +4,7 @@
 }: {
   imports = [
     ./firefox.nix
+    ./vscode.nix
   ];
 
   home.packages = [pkgs.libnotify];
