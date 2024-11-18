@@ -40,7 +40,7 @@
       };
       
       # Media center mini PC
-      devbox = lib.nixosSystem {
+      media-center = lib.nixosSystem {
         modules = [./hosts/media-center];
         specialArgs = {
           inherit inputs outputs;
