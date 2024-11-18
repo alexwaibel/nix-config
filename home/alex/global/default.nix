@@ -1,5 +1,9 @@
 { config, lib, ... }:
 {
+  imports = [
+    ../features/cli
+  ];
+
   programs = {
     home-manager.enable = true;
     git = {
