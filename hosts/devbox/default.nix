@@ -13,9 +13,6 @@
       ../common/users/alex
     ];
 
-  # Set the default editor to vim
-  environment.variables.EDITOR = "vim";
-
   networking.networkmanager.enable = true;
   networking.hostName = "devbox";
   

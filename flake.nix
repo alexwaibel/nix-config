@@ -38,12 +38,29 @@
           inherit inputs outputs;
         };
       };
+      
+      # Media center mini PC
+      devbox = lib.nixosSystem {
+        modules = [./hosts/media-center];
+        specialArgs = {
+          inherit inputs outputs;
+        };
+      };
     };
 
     homeConfigurations = {
       # devbox
       "alex@devbox" = lib.homeManagerConfiguration {
         modules = [./home/alex/devbox.nix];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
+
+      # media-center
+      "alex@media-center" = lib.homeManagerConfiguration {
+        modules = [./home/alex/media-center.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
