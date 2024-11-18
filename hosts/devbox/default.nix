@@ -10,6 +10,7 @@
       ../common/optional/pipewire.nix
       ../common/optional/qemu-guest-agent.nix
       ../common/optional/systemd-boot.nix
+      ../common/optional/xrdp.nix
       ../common/users/alex
     ];
 
