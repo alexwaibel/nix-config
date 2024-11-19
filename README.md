@@ -2,22 +2,13 @@
 My personal nixos config using [flakes](https://nixos.wiki/wiki/Flakes) and [home-manager](https://nix-community.github.io/home-manager/)
 
 # Setup 
-## If installing fresh nixos
+## On a freshly installed nixos machine
 1. `cd ~/.config`
 2. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
 3. `cd nixos`
-4. `sudo cp -r ~/.config/nixos/* /mnt/etc/nixos/`
-5. `sudo nixos-install --flake .#<hostname>`. During install you'll be prompted to set an admin password
-6. `reboot`
-7. Use the admin to log in, either directly or by SSH into the `alex` user and running `su`
-8. Set `alex` user password with `password alex`
-
-## If configuring an existing nixos machine
-1. `cd ~/.config`
-2. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
-3. `cd nixos`
-4. `sudo ln -s ~/.config/nixos /etc/nixos`
-5. `sudo nixos-rebuild switch --flake .#<hostname>`
+4. `sudo mv /etc/nixos /etc/nixos.bak`
+5. `sudo ln -s ~/.config/nixos /etc/nixos`
+6. `sudo nixos-rebuild switch --flake .#<hostname>`
 
 # Usage
 ## Making system changes
