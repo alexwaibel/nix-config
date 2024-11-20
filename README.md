@@ -1,14 +1,26 @@
-# nixos
-My personal nixos config using [flakes](https://nixos.wiki/wiki/Flakes) and [home-manager](https://nix-community.github.io/home-manager/)
+# nix-config
+My personal nix config using [flakes](https://nixos.wiki/wiki/Flakes) and [home-manager](https://nix-community.github.io/home-manager/). Works with both NixOS and standalone Nix.
 
-# Setup 
-## On a freshly installed nixos machine
+# Setup
+## Prerequisites
+Install Nix, either standalone or with NixOS.
+
+## Install config
+### NixOS
 1. `cd ~/.config`
 2. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
 3. `cd nixos`
 4. `sudo mv /etc/nixos /etc/nixos.bak`
 5. `sudo ln -s ~/.config/nixos /etc/nixos`
 6. `sudo nixos-rebuild switch --flake .#<hostname>`
+> [!IMPORTANT]  
+> If you face issues with the switch command, make sure your hardware config is good.
+> You can generate the config for your current hardware with `nixos-generate-config` and compare.
+
+### Standalone
+1. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
+2. `nix-shell`
+3. `home-manager --flake . switch`
 
 # Usage
 ## Making system changes
@@ -32,3 +44,12 @@ If you encounter an error when applying changes you can get more detailed error 
 `sudo nixos-rebuild switch --show-trace --print-build-logs --verbose`
 > [!TIP]
 > A shorter equivalent is `sudo nixos-rebuild switch --show-trace -L -v`
+
+
+# Thanks
+Thank you to all the wonderful developers of Nix, home-manager, and countless other open source
+projects without which this project would never be possible.
+
+A special thanks to Misterio77 for his [Nix Starter Configs](https://github.com/Misterio77/nix-starter-configs) project as well as for making his [personal nix configs](https://github.com/Misterio77/nix-config) available. His config structure was a big source of inspiration for this project.
+
+I'd also like to thank ryan4yin for his [NixOS & Flakes Book](https://github.com/ryan4yin/nixos-and-flakes-book) which was my starting point for this entire nix journey.
