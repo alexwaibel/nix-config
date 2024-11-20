@@ -1,8 +1,9 @@
-{ config, ... }:
+{ inputs, ... }:
 {
   wsl = {
     enable = true;
-    defaultUser = builtins.head (builtins.attrNames config.users.users);
+    # TODO: fix hardcoded username
+    defaultUser = "alex";
     startMenuLaunchers = true;
   };
 }

@@ -54,7 +54,7 @@
 
       # Desktop WSL
       desktop-wsl = lib.nixosSystem {
-        modules = [./hosts/desktop-wsl nixos-wsl.nixosModules.wsl];
+        modules = [./hosts/desktop-wsl];
         specialArgs = {
           inherit inputs outputs;
         };
