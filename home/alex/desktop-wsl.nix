@@ -1,6 +1,6 @@
 {
   imports = [
     ./global
-    ./features/desktop/common
+    ./features/desktop/common/firefox.nix
   ];
 }
