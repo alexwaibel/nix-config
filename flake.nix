@@ -18,6 +18,7 @@
     self,
     nixpkgs,
     home-manager,
+    nixos-wsl,
     systems,
     ...
   } @ inputs: let
@@ -53,7 +54,7 @@
 
       # Desktop WSL
       desktop-wsl = lib.nixosSystem {
-        modules = [./hosts/desktop-wsl];
+        modules = [./hosts/desktop-wsl nixos-wsl.nixosModules.wsl];
         specialArgs = {
           inherit inputs outputs;
         };
