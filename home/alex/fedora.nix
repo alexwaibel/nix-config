@@ -1,7 +1,7 @@
 {
   imports = [
     ./global
-    ./features/desktop
+    ./features/desktop/common
   ];
   targets.genericLinux.enable = true;
 }
