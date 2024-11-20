@@ -1,5 +1,5 @@
 # This file should be included when using hm standalone
-{ lib, ... }:
+{ lib, pkgs, ... }:
 {
   nix = {
     package = lib.mkDefault pkgs.nix;
