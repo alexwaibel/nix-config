@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports =
     [
@@ -8,6 +8,7 @@
     ];
 
   networking.hostName = "desktop-wsl";
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
