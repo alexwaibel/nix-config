@@ -1,7 +1,7 @@
 {
   imports = [
     ./global
+    ./features/desktop
   ];
-  home.username = "alex";
   targets.genericLinux.enable = true;
 }
