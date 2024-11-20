@@ -1,3 +1,4 @@
+{ config, ... }:
 {
   wsl = {
     enable = true;
