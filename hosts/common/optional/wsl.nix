@@ -10,4 +10,6 @@
     defaultUser = "alex";
     startMenuLaunchers = true;
   };
+
+  programs.dconf.enable = true;
 }
