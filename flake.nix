@@ -66,6 +66,15 @@
           inherit inputs outputs;
         };
       };
+
+      # fedora - home-manager standalone
+      "alex@fedora" = lib.homeManagerConfiguration {
+        modules = [./home/alex/fedora.nix ./home/alex/nixpkgs.nix];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
     };
   };
 }
