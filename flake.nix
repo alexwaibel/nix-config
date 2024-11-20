@@ -4,6 +4,10 @@
   inputs = {
     # NixOS official package source, using the nixos-24.05 branch here
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +50,14 @@
           inherit inputs outputs;
         };
       };
+
+      # Desktop WSL
+      desktop-wsl = lib.nixosSystem {
+        modules = [./hosts/desktop-wsl];
+        specialArgs = {
+          inherit inputs outputs;
+        };
+      };
     };
 
     homeConfigurations = {
@@ -61,6 +73,15 @@
       # media-center
       "alex@media-center" = lib.homeManagerConfiguration {
         modules = [./home/alex/media-center.nix];
+        pkgs = pkgsFor.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs outputs;
+        };
+      };
+
+      # desktop wsl
+      "alex@desktop-wsl" = lib.homeManagerConfiguration {
+        modules = [./home/alex/desktop-wsl.nix];
         pkgs = pkgsFor.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs outputs;
