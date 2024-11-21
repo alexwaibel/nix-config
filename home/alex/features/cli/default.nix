@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./fish
+    ./nvim
 
     ./bash.nix
   ];
@@ -27,7 +28,6 @@
     nmap # A utility for network discovery and security auditing
 
     # editors
-    neovim
     vim
 
     # misc
