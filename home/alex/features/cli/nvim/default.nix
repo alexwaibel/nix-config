@@ -15,6 +15,8 @@
     enable = true;
     defaultEditor = true;
 
+    colorschemes.tokyonight.enable = true;
+
     globals = {
       # Set <space> as leader key
       mapleader = " ";
