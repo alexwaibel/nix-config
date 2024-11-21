@@ -62,7 +62,7 @@
       listchars = {
         tab = "» ";
         trail = "·";
-        nbsp = "␣"
+        nbsp = "␣";
       };
 
       # Preview substitutions live as you type
