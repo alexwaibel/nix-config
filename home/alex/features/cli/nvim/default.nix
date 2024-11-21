@@ -92,31 +92,31 @@
         mode = "n";
         key = "[d";
         options.desc = "Go to previous [D]iagnostic message";
-        action.__raw = "vim.diagnostic.goto_prev";
+        action = "vim.diagnostic.goto_prev";
       }
       {
         mode = "n";
         key = "]d";
         options.desc = "Go to next [D]iagnostic message";
-        action.__raw = "vim.diagnostic.goto_next";
+        action = "vim.diagnostic.goto_next";
       }
       {
         mode = "n";
         key = "<leader>e";
         options.desc = "Show diagnostic [E]rror messages";
-        action.__raw = "vim.diagnostic.open_float";
+        action = "vim.diagnostic.open_float";
       }
       {
         mode = "n";
         key = "<leader>q";
         options.desc = "Open diagnostic [Q]uickfix list";
-        action.__raw = "vim.diagnostic.setloclist";
+        action = "vim.diagnostic.setloclist";
       }
       {
         mode = "n";
         key = "<leader>q";
         options.desc = "Open diagnostic [Q]uickfix list";
-        action.__raw = "vim.diagnostic.setloclist";
+        action = "vim.diagnostic.setloclist";
       }
 
       # Exit terminal mode in builtin terminal with double escape. Easier to discover than default <C-\><C-n>
@@ -166,11 +166,7 @@
         event = "TextYankPost";
         desc = "Highlight when yanking (copying) text";
         group = "kickstart-highlight-yank";
-        callback.__raw = ''
-          function()
-            vim.highlight.on_yank()
-          end
-        '';
+        callback = "vim.highlight.on_yank";
       }
     ];
   };
