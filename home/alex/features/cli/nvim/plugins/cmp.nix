@@ -65,10 +65,10 @@
         };
 
         sources = [
-          { name = 'copilot' }
-          { name = 'nvim_lsp' }
-          { name = 'luasnip' }    # snippets
-          { name = 'path' }       # file system paths
+          { name = "copilot" }
+          { name = "nvim_lsp" }
+          { name = "luasnip" }    # snippets
+          { name = "path" }       # file system paths
         ];
       };
     };
