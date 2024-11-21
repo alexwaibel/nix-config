@@ -92,31 +92,31 @@
         mode = "n";
         key = "[d";
         options.desc = "Go to previous [D]iagnostic message";
-        action = vim.diagnostic.goto_prev;
+        action.__raw = "vim.diagnostic.goto_prev";
       }
       {
         mode = "n";
         key = "]d";
         options.desc = "Go to next [D]iagnostic message";
-        action = vim.diagnostic.goto_next;
+        action.__raw = "vim.diagnostic.goto_next";
       }
       {
         mode = "n";
         key = "<leader>e";
         options.desc = "Show diagnostic [E]rror messages";
-        action = vim.diagnostic.open_float;
+        action.__raw = "vim.diagnostic.open_float";
       }
       {
         mode = "n";
         key = "<leader>q";
         options.desc = "Open diagnostic [Q]uickfix list";
-        action = vim.diagnostic.setloclist;
+        action.__raw = "vim.diagnostic.setloclist";
       }
       {
         mode = "n";
         key = "<leader>q";
         options.desc = "Open diagnostic [Q]uickfix list";
-        action = vim.diagnostic.setloclist;
+        action.__raw = "vim.diagnostic.setloclist";
       }
 
       # Exit terminal mode in builtin terminal with double escape. Easier to discover than default <C-\><C-n>
