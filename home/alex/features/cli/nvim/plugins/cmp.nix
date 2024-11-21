@@ -11,7 +11,7 @@
             function(args)
               require('luasnip').luasnip.lsp_expand(ags.body)
             end
-          ''
+          '';
         };
 
         completion = {
