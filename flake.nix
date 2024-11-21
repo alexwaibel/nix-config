@@ -22,7 +22,6 @@
     self,
     nixpkgs,
     home-manager,
-    nixos-wsl,
     systems,
     ...
   } @ inputs: let
