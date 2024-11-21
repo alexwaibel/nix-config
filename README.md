@@ -13,9 +13,14 @@ Install Nix, either standalone or with NixOS.
 4. `sudo mv /etc/nixos /etc/nixos.bak`
 5. `sudo ln -s ~/.config/nixos /etc/nixos`
 6. `sudo nixos-rebuild switch --flake .#<hostname>`
+
 > [!IMPORTANT]  
 > If you face issues with the switch command, make sure your hardware config is good.
 > You can generate the config for your current hardware with `nixos-generate-config` and compare.
+
+> [!CAUTION]
+> If using NixOS-WSL follow [these docs](https://nix-community.github.io/NixOS-WSL/how-to/change-username.html)
+> instead of running `sudo nixos-rebuild switch`. Otherwise the non-default username will lead to a broken install.
 
 ### Standalone
 1. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
