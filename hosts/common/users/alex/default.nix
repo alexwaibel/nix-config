@@ -8,10 +8,10 @@
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
   users.users.alex = {
-    isNormalUser = lib.mkIf !darwin true;
+    ${if !darwin then "isNormalUser" else null} = true;
     description = "Alex";
     shell = pkgs.fish;
-    extraGroups = lib.mkIf !darwin ifTheyExist [
+    ${if !darwin then "extraGroups" else null} = ifTheyExist [
       "docker"
       "networkmanager"
       "systemd-journal"

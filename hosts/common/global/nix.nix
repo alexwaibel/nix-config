@@ -1,4 +1,7 @@
 {
+  darwin ? false,
+  ...
+}: {
   nix = {
     settings = {
       experimental-features = [
@@ -9,7 +12,7 @@
     };
     gc = {
       automatic = true;
-      dates = "weekly";
+      ${if !darwin then "dates" else null} = "weekly";
       options = "--delete-older-than 2w";
     };
   };
