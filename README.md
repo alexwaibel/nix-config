@@ -3,15 +3,15 @@ My personal nix config using [flakes](https://nixos.wiki/wiki/Flakes) and [home-
 
 # Setup
 ## Prerequisites
-Install Nix, either standalone or with NixOS.
+Install Nix, either standalone or with NixOS. For MacOS see the recommendations from [nix-darwin](https://github.com/LnL7/nix-darwin).
 
 ## Install config
 ### NixOS
 1. `cd ~/.config`
 2. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
-3. `cd nixos`
+3. `cd nix-config`
 4. `sudo mv /etc/nixos /etc/nixos.bak`
-5. `sudo ln -s ~/.config/nixos /etc/nixos`
+5. `sudo ln -s ~/.config/nix-config /etc/nixos`
 6. `sudo nixos-rebuild switch --flake .#<hostname>`
 
 > [!IMPORTANT]  
@@ -22,6 +22,13 @@ Install Nix, either standalone or with NixOS.
 > If using NixOS-WSL follow [these docs](https://nix-community.github.io/NixOS-WSL/how-to/change-username.html)
 > instead of running `sudo nixos-rebuild switch`. Otherwise the non-default username will lead to a broken install.
 
+## MacOS
+1. `cd ~/.config`
+2. Clone the repo
+3. `cd nix-config`
+2. `nix run nix-darwin -- switch --flake .`
+3. Now you can use `darwin-rebuild switch --flake .`
+
 ### Standalone
 1. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
 2. `nix-shell`
@@ -29,7 +36,7 @@ Install Nix, either standalone or with NixOS.
 
 # Usage
 ## Making system changes
-1. Modify the `~/.config/nixos` config files
+1. Modify the `~/.config/nix-config` config files
 2. Commit and push the changes with git
 3. Run `sudo nixos-rebuild switch` to apply the changes
 

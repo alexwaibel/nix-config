@@ -4,24 +4,34 @@
   inputs = {
     # NixOS official package source, using the nixos-24.05 branch here
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     home-manager = {
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixvim = {
       url = "github:nix-community/nixvim/nixos-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    darwin,
     systems,
     ...
   } @ inputs: let
@@ -99,6 +109,13 @@
         extraSpecialArgs = {
           inherit inputs outputs;
         };
+      };
+    };
+
+    darwinConfigurations."Alexs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+      modules = [ ./hosts/intel-macbook-pro ];
+      specialArgs = {
+        inherit inputs outputs;
       };
     };
   };
