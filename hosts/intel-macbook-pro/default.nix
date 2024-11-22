@@ -11,5 +11,5 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-darwin";
   
   # Set November 2024
-  system.stateVersion = "5";
+  system.stateVersion = 5;
 }
