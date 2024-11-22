@@ -116,8 +116,8 @@
       modules = [ ./hosts/intel-macbook-pro ];
       specialArgs = {
         inherit inputs outputs;
+        darwin = true;
       };
-      darwin = true;
     };
   };
 }
