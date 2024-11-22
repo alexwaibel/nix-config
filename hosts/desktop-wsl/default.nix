@@ -3,6 +3,7 @@
   imports =
     [
       ../common/global
+      ../common/optional/nixos
       ../common/optional/wsl.nix
       ../common/users/alex
     ];

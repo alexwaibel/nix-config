@@ -5,6 +5,7 @@
       ./hardware-configuration.nix
 
       ../common/global
+      ../common/optional/nixos
       ../common/optional/docker.nix
       ../common/optional/gnome.nix
       ../common/optional/pipewire.nix

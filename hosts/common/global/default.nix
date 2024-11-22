@@ -8,9 +8,7 @@
     [
       inputs.home-manager.nixosModules.home-manager
       ./fish.nix
-      ./locale.nix
       ./nix.nix
-      ./openssh.nix
     ];
 
   home-manager.useGlobalPkgs = true;
