@@ -15,7 +15,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    darwin = {
+    nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -31,7 +31,7 @@
     self,
     nixpkgs,
     home-manager,
-    darwin,
+    nix-darwin,
     systems,
     ...
   } @ inputs: let
