@@ -5,9 +5,7 @@
 }: {
   imports =
     [
-      inputs.home-manager.nixosModules.home-manager
-      ./locale.nix
-      ./openssh.nix
+      inputs.home-manager.darwinModules.home-manager
     ];
 
   home-manager.useGlobalPkgs = true;
