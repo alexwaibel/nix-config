@@ -8,8 +8,8 @@
         "nix-command"
         "flakes"
       ];
-      auto-optimise-store = true;
     };
+    optimise.automatic = true;
     gc = {
       automatic = true;
       ${if !darwin then "dates" else null} = "weekly";
