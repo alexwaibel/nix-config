@@ -11,7 +11,6 @@
       ./locale.nix
       ./nix.nix
       ./openssh.nix
-      ./systemd-initrd.nix
     ];
 
   home-manager.useGlobalPkgs = true;
