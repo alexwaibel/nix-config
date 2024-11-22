@@ -117,6 +117,7 @@
       specialArgs = {
         inherit inputs outputs;
       };
+      darwin = true;
     };
   };
 }

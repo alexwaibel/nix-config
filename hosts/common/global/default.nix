@@ -6,7 +6,11 @@
 }: {
   imports =
     [
-      inputs.home-manager.nixosModules.home-manager
+      (if config.darwin then
+        inputs.home-manager.darwinModules.home-manager
+      else
+        inputs.home-manager.nixosModules.home-manager
+      )
       ./fish.nix
       ./nix.nix
     ];
