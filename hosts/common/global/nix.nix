@@ -1,9 +1,7 @@
 {
-  specialArgs,
+  pkgs,
   ...
-}: let
-  darwin = specialArgs.darwin or false;
-in {
+}: {
   nix = {
     settings = {
       experimental-features = [
@@ -14,7 +12,7 @@ in {
     optimise.automatic = true;
     gc = {
       automatic = true;
-      ${if !darwin then "dates" else null} = "weekly";
+      ${if !pkgs.stdenv.isDarwin then "dates" else null} = "weekly";
       options = "--delete-older-than 2w";
     };
   };

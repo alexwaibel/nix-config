@@ -45,7 +45,6 @@
           config.allowUnfree = true;
         }
     );
-    darwin = true;
   in {
     inherit lib;
 
@@ -116,7 +115,7 @@
     darwinConfigurations."Alexs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
       modules = [ ./hosts/intel-macbook-pro ];
       specialArgs = {
-        inherit inputs outputs darwin;
+        inherit inputs outputs;
       };
     };
   };

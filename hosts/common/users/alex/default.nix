@@ -6,13 +6,12 @@
   ...
 }: let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
-  darwin = specialArgs.darwin or false;
 in {
   users.users.alex = {
-    ${if !darwin then "isNormalUser" else null} = true;
+    ${if !pkgs.stdenv.isDarwin then "isNormalUser" else null} = true;
     description = "Alex";
     shell = pkgs.fish;
-    ${if !darwin then "extraGroups" else null} = ifTheyExist [
+    ${if !pkgs.stdenv.isDarwin then "extraGroups" else null} = ifTheyExist [
       "docker"
       "networkmanager"
       "systemd-journal"
