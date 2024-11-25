@@ -34,7 +34,6 @@
     file
     which
     tree
-    libgcc
     gnumake
     gnused
     gnutar
@@ -61,6 +60,7 @@
     lsof # list open files
     pciutils # lspci
   ] ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
+    libgcc
     iotop # io monitoring
     strace # system call monitoring
     ltrace # library call monitoring
