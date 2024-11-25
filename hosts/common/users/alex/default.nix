@@ -2,10 +2,11 @@
   pkgs,
   config,
   lib,
-  darwin ? false,
+  specialArgs,
   ...
 }: let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
+  darwin = specialArgs.darwin or false;
 in {
   users.users.alex = {
     ${if !darwin then "isNormalUser" else null} = true;

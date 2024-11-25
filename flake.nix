@@ -45,9 +45,10 @@
           config.allowUnfree = true;
         }
     );
+    darwin = true;
   in {
     inherit lib;
-    
+
     nixosConfigurations = {
       # Devbox VM
       devbox = lib.nixosSystem {
@@ -56,7 +57,7 @@
           inherit inputs outputs;
         };
       };
-      
+
       # Media center mini PC
       media-center = lib.nixosSystem {
         modules = [./hosts/media-center];
@@ -115,8 +116,7 @@
     darwinConfigurations."Alexs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
       modules = [ ./hosts/intel-macbook-pro ];
       specialArgs = {
-        inherit inputs outputs;
-        darwin = true;
+        inherit inputs outputs darwin;
       };
     };
   };

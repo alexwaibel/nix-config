@@ -1,7 +1,9 @@
 {
-  darwin ? false,
+  specialArgs,
   ...
-}: {
+}: let
+  darwin = specialArgs.darwin or false;
+in {
   nix = {
     settings = {
       experimental-features = [
