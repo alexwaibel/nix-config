@@ -1,23 +1,22 @@
 { config, pkgs, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
+  imports = [
+    ./hardware-configuration.nix
 
-      ../common/global
-      ../common/optional/nixos
-      ../common/optional/docker.nix
-      ../common/optional/gnome.nix
-      ../common/optional/pipewire.nix
-      ../common/optional/qemu-guest-agent.nix
-      ../common/optional/systemd-boot.nix
-      ../common/optional/xrdp.nix
-      ../common/users/alex
-    ];
+    ../common/global
+    ../common/optional/nixos
+    ../common/optional/docker.nix
+    ../common/optional/gnome.nix
+    ../common/optional/pipewire.nix
+    ../common/optional/qemu-guest-agent.nix
+    ../common/optional/systemd-boot.nix
+    ../common/optional/xrdp.nix
+    ../common/users/alex
+  ];
 
   networking.networkmanager.enable = true;
   networking.hostName = "devbox";
-  
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

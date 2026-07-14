@@ -1,19 +1,18 @@
 { config, pkgs, ... }:
 {
-  imports =
-    [
-      ./hardware-configuration.nix
+  imports = [
+    ./hardware-configuration.nix
 
-      ../common/global
-      ../common/optional/nixos
-      ../common/optional/gnome.nix
-      ../common/optional/systemd-boot.nix
-      ../common/users/alex
-    ];
+    ../common/global
+    ../common/optional/nixos
+    ../common/optional/gnome.nix
+    ../common/optional/systemd-boot.nix
+    ../common/users/alex
+  ];
 
   networking.networkmanager.enable = true;
   networking.hostName = "media-center";
-  
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

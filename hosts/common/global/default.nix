@@ -1,14 +1,10 @@
 # This file (and the global directory) holds config used on all hosts
+{ inputs, outputs, ... }:
 {
-  inputs,
-  outputs,
-  ...
-}: {
-  imports =
-    [
-      ./fish.nix
-      ./nix.nix
-    ];
+  imports = [
+    ./fish.nix
+    ./nix.nix
+  ];
 
   nixpkgs = {
     config = {

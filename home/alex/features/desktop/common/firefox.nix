@@ -1,7 +1,5 @@
+{ lib, ... }:
 {
-  lib,
-  ...
-}: {
   programs.firefox = {
     enable = true;
     profiles.alex = {
@@ -9,10 +7,14 @@
         force = true;
         default = "kagi";
         privateDefault = "ddg";
-        order = ["kagi" "ddg" "google"];
+        order = [
+          "kagi"
+          "ddg"
+          "google"
+        ];
         engines = {
           "kagi" = {
-            urls = [{template = "https://kagi.com/search?q={searchTerms}";}];
+            urls = [ { template = "https://kagi.com/search?q={searchTerms}"; } ];
             icon = "https://kagi.com/favicon.ico";
           };
         };
@@ -93,9 +95,9 @@
   };
 
   xdg.mimeApps.defaultApplications = {
-    "text/html" = ["firefox.desktop"];
-    "text/xml" = ["firefox.desktop"];
-    "x-scheme-handler/http" = ["firefox.desktop"];
-    "x-scheme-handler/https" = ["firefox.desktop"];
+    "text/html" = [ "firefox.desktop" ];
+    "text/xml" = [ "firefox.desktop" ];
+    "x-scheme-handler/http" = [ "firefox.desktop" ];
+    "x-scheme-handler/https" = [ "firefox.desktop" ];
   };
 }

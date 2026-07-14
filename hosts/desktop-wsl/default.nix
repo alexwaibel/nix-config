@@ -1,16 +1,20 @@
-{ config, lib, pkgs, ... }:
 {
-  imports =
-    [
-      ../common/global
-      ../common/optional/nixos
-      ../common/optional/wsl.nix
-      ../common/users/alex
-    ];
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = [
+    ../common/global
+    ../common/optional/nixos
+    ../common/optional/wsl.nix
+    ../common/users/alex
+  ];
 
   networking.hostName = "desktop-wsl";
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

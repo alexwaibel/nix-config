@@ -1,8 +1,6 @@
 { config, lib, ... }:
 {
-  imports = [
-    ../features/cli
-  ];
+  imports = [ ../features/cli ];
 
   programs = {
     home-manager.enable = true;

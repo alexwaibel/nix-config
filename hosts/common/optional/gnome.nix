@@ -16,8 +16,6 @@
     gnome.gnome-remote-desktop.enable = true;
   };
   # Fix broken stuff
-  environment.systemPackages = with pkgs; [
-    gnome-session
-  ];
+  environment.systemPackages = with pkgs; [ gnome-session ];
   services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
 }

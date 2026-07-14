@@ -4,7 +4,7 @@
     cmp = {
       enable = true;
       autoEnableSources = true;
-      
+
       settings = {
         snippet = {
           expand = ''
@@ -67,8 +67,8 @@
         sources = [
           { name = "copilot"; }
           { name = "nvim_lsp"; }
-          { name = "luasnip"; }    # snippets
-          { name = "path"; }       # file system paths
+          { name = "luasnip"; } # snippets
+          { name = "path"; } # file system paths
         ];
       };
     };

@@ -29,99 +29,118 @@
       url = "github:nix-systems/default";
     };
 
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    nix-darwin,
-    systems,
-    ...
-  } @ inputs: let
-    inherit (self) outputs;
-    lib = nixpkgs.lib // home-manager.lib;
-    forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
-    pkgsFor = lib.genAttrs (import systems) (
-      system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      nix-darwin,
+      systems,
+      treefmt-nix,
+      ...
+    }@inputs:
+    let
+      inherit (self) outputs;
+      lib = nixpkgs.lib // home-manager.lib;
+      forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
+      pkgsFor = lib.genAttrs (import systems) (
+        system:
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
         }
-    );
-  in {
-    inherit lib;
+      );
+    in
+    {
+      inherit lib;
 
-    nixosConfigurations = {
-      # Devbox VM
-      devbox = lib.nixosSystem {
-        modules = [./hosts/devbox];
-        specialArgs = {
-          inherit inputs outputs;
+      formatter = forEachSystem (
+        pkgs:
+        (treefmt-nix.lib.evalModule pkgs {
+          projectRootFile = "flake.nix";
+          programs.nixfmt = {
+            enable = true;
+            package = pkgs.nixfmt-rfc-style;
+          };
+        }).config.build.wrapper
+      );
+
+      checks = forEachSystem (pkgs: {
+        formatting =
+          (treefmt-nix.lib.evalModule pkgs {
+            projectRootFile = "flake.nix";
+            programs.nixfmt = {
+              enable = true;
+              package = pkgs.nixfmt-rfc-style;
+            };
+
+          }).config.build.check
+            self;
+      });
+
+      nixosConfigurations = {
+        # Devbox VM
+        devbox = lib.nixosSystem {
+          modules = [ ./hosts/devbox ];
+          specialArgs = { inherit inputs outputs; };
+        };
+
+        # Media center mini PC
+        media-center = lib.nixosSystem {
+          modules = [ ./hosts/media-center ];
+          specialArgs = { inherit inputs outputs; };
+        };
+
+        # Desktop WSL
+        desktop-wsl = lib.nixosSystem {
+          modules = [ ./hosts/desktop-wsl ];
+          specialArgs = { inherit inputs outputs; };
         };
       };
 
-      # Media center mini PC
-      media-center = lib.nixosSystem {
-        modules = [./hosts/media-center];
-        specialArgs = {
-          inherit inputs outputs;
+      homeConfigurations = {
+        # devbox
+        "alex@devbox" = lib.homeManagerConfiguration {
+          modules = [ ./home/alex/devbox.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+
+        # media-center
+        "alex@media-center" = lib.homeManagerConfiguration {
+          modules = [ ./home/alex/media-center.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+
+        # desktop wsl
+        "alex@desktop-wsl" = lib.homeManagerConfiguration {
+          modules = [ ./home/alex/desktop-wsl.nix ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
+
+        # fedora - home-manager standalone
+        "alex@fedora" = lib.homeManagerConfiguration {
+          modules = [
+            ./home/alex/fedora.nix
+            ./home/alex/nixpkgs.nix
+          ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
         };
       };
 
-      # Desktop WSL
-      desktop-wsl = lib.nixosSystem {
-        modules = [./hosts/desktop-wsl];
-        specialArgs = {
-          inherit inputs outputs;
-        };
+      darwinConfigurations."Alexs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
+        modules = [ ./hosts/intel-macbook-pro ];
+        specialArgs = { inherit inputs outputs; };
       };
     };
-
-    homeConfigurations = {
-      # devbox
-      "alex@devbox" = lib.homeManagerConfiguration {
-        modules = [./home/alex/devbox.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-
-      # media-center
-      "alex@media-center" = lib.homeManagerConfiguration {
-        modules = [./home/alex/media-center.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-
-      # desktop wsl
-      "alex@desktop-wsl" = lib.homeManagerConfiguration {
-        modules = [./home/alex/desktop-wsl.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-
-      # fedora - home-manager standalone
-      "alex@fedora" = lib.homeManagerConfiguration {
-        modules = [./home/alex/fedora.nix ./home/alex/nixpkgs.nix];
-        pkgs = pkgsFor.x86_64-linux;
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-      };
-    };
-
-    darwinConfigurations."Alexs-MacBook-Pro" = nix-darwin.lib.darwinSystem {
-      modules = [ ./hosts/intel-macbook-pro ];
-      specialArgs = {
-        inherit inputs outputs;
-      };
-    };
-  };
 }
-
