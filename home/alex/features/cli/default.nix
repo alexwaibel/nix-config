@@ -43,7 +43,7 @@
     xclip
     wget
     curl
-    neofetch
+    fastfetch
     nnn # terminal file manager
 
     # nix related
