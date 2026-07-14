@@ -2,8 +2,8 @@
   description = "NixOS configuration";
 
   inputs = {
-    # NixOS official package source, using the nixos-24.05 branch here
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    # NixOS official package source, using the nixos-25.05 branch here
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
 
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";
@@ -11,7 +11,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -21,8 +21,12 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-24.05";
+      url = "github:nix-community/nixvim/nixos-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    systems = {
+      url = "github:nix-systems/default";
     };
 
   };

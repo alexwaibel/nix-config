@@ -3,9 +3,7 @@
   services = {
     xserver = {
       enable = true;
-      desktopManager.gnome = {
-        enable = true;
-      };
+      desktopManager.gnome.enable = true;
       displayManager.gdm = {
         enable = true;
         autoSuspend = false;
@@ -19,7 +17,7 @@
   };
   # Fix broken stuff
   environment.systemPackages = with pkgs; [
-    gnome3.gnome-session
+    gnome-session
   ];
-  services.xrdp.defaultWindowManager = "${pkgs.gnome3.gnome-session}/bin/gnome-session";
+  services.xrdp.defaultWindowManager = "${pkgs.gnome-session}/bin/gnome-session";
 }
