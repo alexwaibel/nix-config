@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
 
     ./plugins
 
@@ -13,15 +13,23 @@
     enable = true;
     defaultEditor = true;
 
-    colorschemes.tokyonight.enable = true;
+    # Use the flake's single nixpkgs (inputs.nixvim follows it).
+    nixpkgs.source = inputs.nixpkgs;
+
+    colorschemes.tokyonight = {
+      enable = true;
+      settings = {
+        style = "night";
+        styles.comments.italic = false;
+      };
+    };
 
     globals = {
       # Set <space> as leader key
       mapleader = " ";
       maplocalleader = " ";
 
-      # TODO: Invest in setting up a nerd font for nix
-      have_nerd_font = false;
+      have_nerd_font = true;
     };
   };
 }

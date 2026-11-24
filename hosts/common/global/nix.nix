@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 {
   nix = {
     settings = {
@@ -10,7 +10,7 @@
     optimise.automatic = true;
     gc = {
       automatic = true;
-      ${if !pkgs.stdenv.isDarwin then "dates" else null} = "weekly";
+      dates = "weekly";
       options = "--delete-older-than 2w";
     };
   };

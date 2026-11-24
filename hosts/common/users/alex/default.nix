@@ -10,10 +10,10 @@ let
 in
 {
   users.users.alex = {
-    ${if !pkgs.stdenv.isDarwin then "isNormalUser" else null} = true;
+    isNormalUser = true;
     description = "Alex";
     shell = pkgs.fish;
-    ${if !pkgs.stdenv.isDarwin then "extraGroups" else null} = ifTheyExist [
+    extraGroups = ifTheyExist [
       "docker"
       "networkmanager"
       "systemd-journal"

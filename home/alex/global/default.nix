@@ -6,8 +6,10 @@
     home-manager.enable = true;
     git = {
       enable = true;
-      userName = "Alex Waibel";
-      userEmail = "alexwaibel@users.noreply.github.com";
+      settings.user = {
+        name = "Alex Waibel";
+        email = "alexwaibel@users.noreply.github.com";
+      };
     };
   };
 

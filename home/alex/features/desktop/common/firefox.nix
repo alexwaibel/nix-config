@@ -1,6 +1,8 @@
 { lib, ... }:
 {
   programs.firefox = {
+    # Keep existing profiles where they are
+    configPath = ".mozilla/firefox";
     enable = true;
     profiles.alex = {
       search = {

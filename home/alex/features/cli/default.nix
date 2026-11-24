@@ -5,7 +5,20 @@
     ./nvim
 
     ./bash.nix
+    ./tmux.nix
   ];
+
+  home.sessionPath = [ "$HOME/.local/bin" ];
+
+  # Shared by every enabled shell (bash, fish, ...)
+  home.shellAliases = {
+    ls = "ls --color=auto";
+    grep = "grep --color=auto";
+    ll = "ls -alF";
+    la = "ls -A";
+    l = "ls -CF";
+  };
+
   home.packages =
     with pkgs;
     [
@@ -20,7 +33,6 @@
       jq # A lightweight and flexible command-line JSON processor
       yq-go # yaml processor https://github.com/mikefarah/yq
       fzf # A command-line fuzzy finder
-      nixfmt-rfc-style # Official Nix formatter to ensure uniform style
 
       # networking tools
       mtr # A network diagnostic tool

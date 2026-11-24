@@ -13,25 +13,19 @@
         mode = "n";
         key = "[d";
         options.desc = "Go to previous [D]iagnostic message";
-        action.__raw = "vim.diagnostic.goto_prev";
+        action.__raw = "function() vim.diagnostic.jump({ count = -1, float = true }) end";
       }
       {
         mode = "n";
         key = "]d";
         options.desc = "Go to next [D]iagnostic message";
-        action.__raw = "vim.diagnostic.goto_next";
+        action.__raw = "function() vim.diagnostic.jump({ count = 1, float = true }) end";
       }
       {
         mode = "n";
         key = "<leader>e";
         options.desc = "Show diagnostic [E]rror messages";
         action.__raw = "vim.diagnostic.open_float";
-      }
-      {
-        mode = "n";
-        key = "<leader>q";
-        options.desc = "Open diagnostic [Q]uickfix list";
-        action.__raw = "vim.diagnostic.setloclist";
       }
       {
         mode = "n";

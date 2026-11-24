@@ -3,7 +3,7 @@ My personal nix config using [flakes](https://nixos.wiki/wiki/Flakes) and [home-
 
 # Setup
 ## Prerequisites
-Install Nix, either standalone or with NixOS. For MacOS see the recommendations from [nix-darwin](https://github.com/LnL7/nix-darwin).
+Install Nix, either standalone or with NixOS.
 
 ## Install config
 ### NixOS
@@ -21,13 +21,6 @@ Install Nix, either standalone or with NixOS. For MacOS see the recommendations 
 > [!CAUTION]
 > If using NixOS-WSL follow [these docs](https://nix-community.github.io/NixOS-WSL/how-to/change-username.html)
 > instead of running `sudo nixos-rebuild switch`. Otherwise the non-default username will lead to a broken install.
-
-## MacOS
-1. `cd ~/.config`
-2. Clone the repo
-3. `cd nix-config`
-2. `nix run nix-darwin -- switch --flake .`
-3. Now you can use `darwin-rebuild switch --flake .`
 
 ### Standalone
 1. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
