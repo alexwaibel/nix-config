@@ -9,11 +9,11 @@
         "flakes"
       ];
     };
-  };
-
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
+    # NixOS hosts collect garbage system-wide; standalone machines need it per user
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 2w";
     };
   };
 }

@@ -1,5 +1,5 @@
 {
-  description = "NixOS configuration";
+  description = "NixOS and home-manager configurations";
 
   inputs = {
     # NixOS official package source, using the nixos-26.05 branch here
@@ -51,32 +51,35 @@
           config.allowUnfree = true;
         }
       );
+      treefmtFor = lib.genAttrs (import systems) (
+        system:
+        treefmt-nix.lib.evalModule pkgsFor.${system} {
+          projectRootFile = "flake.nix";
+          programs.nixfmt.enable = true;
+        }
+      );
     in
     {
       inherit lib;
 
       formatter = forEachSystem (
-        pkgs:
-        (treefmt-nix.lib.evalModule pkgs {
-          projectRootFile = "flake.nix";
-          programs.nixfmt = {
-            enable = true;
-            package = pkgs.nixfmt;
-          };
-        }).config.build.wrapper
+        pkgs: treefmtFor.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper
       );
 
       checks = forEachSystem (pkgs: {
-        formatting =
-          (treefmt-nix.lib.evalModule pkgs {
-            projectRootFile = "flake.nix";
-            programs.nixfmt = {
-              enable = true;
-              package = pkgs.nixfmt;
-            };
+        formatting = treefmtFor.${pkgs.stdenv.hostPlatform.system}.config.build.check self;
+      });
 
-          }).config.build.check
-            self;
+      devShells = forEachSystem (pkgs: {
+        # Bootstrap tools for applying this config: `nix develop`
+        default = pkgs.mkShell {
+          NIX_CONFIG = "extra-experimental-features = nix-command flakes";
+          packages = [
+            pkgs.git
+            pkgs.nix
+            home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager
+          ];
+        };
       });
 
       nixosConfigurations = {
@@ -99,28 +102,9 @@
         };
       };
 
+      # Standalone home-manager for non-NixOS machines.
+      # NixOS hosts get home-manager through hosts/common/users/alex instead.
       homeConfigurations = {
-        # devbox
-        "alex@devbox" = lib.homeManagerConfiguration {
-          modules = [ ./home/alex/devbox.nix ];
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-        };
-
-        # media-center
-        "alex@media-center" = lib.homeManagerConfiguration {
-          modules = [ ./home/alex/media-center.nix ];
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-        };
-
-        # desktop wsl
-        "alex@desktop-wsl" = lib.homeManagerConfiguration {
-          modules = [ ./home/alex/desktop-wsl.nix ];
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-        };
-
         # fedora - home-manager standalone
         "alex@fedora" = lib.homeManagerConfiguration {
           modules = [

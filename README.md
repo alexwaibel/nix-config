@@ -22,10 +22,13 @@ Install Nix, either standalone or with NixOS.
 > If using NixOS-WSL follow [these docs](https://nix-community.github.io/NixOS-WSL/how-to/change-username.html)
 > instead of running `sudo nixos-rebuild switch`. Otherwise the non-default username will lead to a broken install.
 
-### Standalone
+### Standalone (non-NixOS, e.g. Pop!_OS)
 1. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
-2. `nix-shell`
-3. `home-manager --flake . switch`
+2. `nix --extra-experimental-features 'nix-command flakes' develop`
+3. `home-manager switch --flake .#alex@<hostname> -b hm-bak`
+
+After the first switch, `home-manager` is installed and flakes are enabled, so use
+`home-manager switch --flake .` (on NixOS hosts home-manager is applied by `nixos-rebuild`).
 
 # Usage
 ## Making system changes
