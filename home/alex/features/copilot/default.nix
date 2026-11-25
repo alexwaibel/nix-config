@@ -10,6 +10,12 @@ let
 
   # Deep-merged into ~/.copilot/settings.json at activation; Copilot owns (and writes) everything else.
   managedSettings = {
+    sandbox.userPolicy.filesystem.readonlyPaths = [
+      # Let sandboxed commands use Nix (store paths, profiles, and the daemon)
+      "/nix/store"
+      "/nix/var/nix/profiles"
+      "/nix/var/nix/daemon-socket"
+    ];
     sandbox.userPolicy.filesystem.deniedPaths = [
       # Keep sandboxed commands away from rendered secrets (Copilot itself reads its config outside the sandbox)
       "~/.copilot/mcp-config.json"
