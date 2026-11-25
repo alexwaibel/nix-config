@@ -1,6 +1,5 @@
 {
   inputs,
-  outputs,
   pkgs,
   config,
   lib,
@@ -27,14 +26,14 @@ in
     ];
 
     openssh.authorizedKeys.keys = lib.splitString "\n" (
-      builtins.readFile ../../../../home/alex/ssh.pub
+      builtins.readFile (inputs.self + "/home/alex/ssh.pub")
     );
   };
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = { inherit inputs outputs; };
-    users.alex = import ../../../../home/alex/${config.networking.hostName}.nix;
+    extraSpecialArgs = { inherit inputs; };
+    users.alex = import (inputs.self + "/home/alex/${config.networking.hostName}.nix");
   };
 }

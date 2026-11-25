@@ -1,5 +1,6 @@
+{ inputs, ... }:
 {
-  imports = [ ../../../shared/nix.nix ];
+  imports = [ (inputs.self + "/shared/nix.nix") ];
 
   nix.optimise.automatic = true;
 }

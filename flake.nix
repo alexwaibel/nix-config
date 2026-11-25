@@ -46,7 +46,6 @@
       ...
     }@inputs:
     let
-      inherit (self) outputs;
       lib = nixpkgs.lib // home-manager.lib;
       forEachSystem = f: lib.genAttrs (import systems) (system: f pkgsFor.${system});
       pkgsFor = lib.genAttrs (import systems) (
@@ -60,7 +59,7 @@
         name:
         lib.nixosSystem {
           modules = [ ./hosts/${name} ];
-          specialArgs = { inherit inputs outputs; };
+          specialArgs = { inherit inputs; };
         };
       # Standalone home-manager for non-NixOS machines.
       # NixOS hosts get home-manager through hosts/common/users/alex instead.
@@ -72,7 +71,7 @@
             ./home/alex/standalone.nix
           ];
           pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
+          extraSpecialArgs = { inherit inputs; };
         };
       treefmtFor = lib.genAttrs (import systems) (
         system:
@@ -83,8 +82,6 @@
       );
     in
     {
-      inherit lib;
-
       formatter = forEachSystem (
         pkgs: treefmtFor.${pkgs.stdenv.hostPlatform.system}.config.build.wrapper
       );
