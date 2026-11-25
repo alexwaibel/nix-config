@@ -15,6 +15,7 @@ let
       "~/.copilot/mcp-config.json"
       "~/.config/sops-nix"
       "\${XDG_RUNTIME_DIR}/secrets.d"
+      "\${XDG_RUNTIME_DIR}/home-ops"
     ];
   };
 in
