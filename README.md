@@ -64,7 +64,9 @@ Fast-moving tools are installed outside Nix and update themselves; Nix only conf
 3. Run `sudo nixos-rebuild switch` to apply the changes
 
 ## Updating
-To update the entire system:
+Renovate opens a "flake inputs" PR and a `flake.lock` maintenance PR every Monday.
+
+To manually update the entire system:
 1. Update the flake.lock file with `nix flake update`
 2. Apply the changes with `sudo nixos-rebuild switch`
 > [!TIP]

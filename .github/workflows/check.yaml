@@ -1,0 +1,45 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Nix Check"
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Nix Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@ef8a148080ab6020fd15196c2084a2eea5ff2d25 # v22
+
+      - name: Enable Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@565684385bcd71bad329742eefe8d12f2e765b39 # v13
+
+      # Formatting, plus evaluation of every NixOS configuration
+      - name: Flake check
+        run: nix flake check --no-write-lock-file
+
+      # flake check ignores homeConfigurations; evaluate and plan every target without building it
+      - name: Dry-run build all configurations
+        run: |
+          targets=()
+          for h in $(nix eval --json .#nixosConfigurations --apply builtins.attrNames | jq -r '.[]'); do
+            targets+=(".#nixosConfigurations.\"$h\".config.system.build.toplevel")
+          done
+          for h in $(nix eval --json .#homeConfigurations --apply builtins.attrNames | jq -r '.[]'); do
+            targets+=(".#homeConfigurations.\"$h\".activationPackage")
+          done
+          printf '%s\n' "${targets[@]}"
+          nix build --dry-run --no-link --no-write-lock-file "${targets[@]}"
