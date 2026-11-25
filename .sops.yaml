@@ -1,0 +1,12 @@
+# age-plugin-yubikey identities, "nix-config" slot on each YubiKey.
+keys:
+  - &yubikey_nano age1yubikey1qvvya9x37wyjf36d7etdfuf9mm2wu62v7rayrhx2f3fhyk8nkcz0jq6cs45 # 5C Nano 15037147 (pop-os laptop), touch only
+  - &yubikey_nfc_a age1yubikey1qw2fd4y7msrz3qtzr5mrl6nqqk7gdpf5d4hmceq006qghxk8kzvd7zt74jm # 5C NFC 24781147, PIN + touch
+  - &yubikey_nfc_b age1yubikey1qff7g2acsy0wl9m7vuzmqut09dag8vw8cqskaafapwz4fddep9jdgq6nku4 # 5C NFC 24781393, PIN + touch
+creation_rules:
+  - path_regex: secrets/[^/]+\.sops\.ya?ml$
+    key_groups:
+      - age:
+          - *yubikey_nano
+          - *yubikey_nfc_a
+          - *yubikey_nfc_b

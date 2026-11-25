@@ -30,6 +30,10 @@ Install Nix, either standalone or with NixOS.
 After the first switch, `home-manager` is installed and flakes are enabled, so use
 `home-manager switch --flake .` (on NixOS hosts home-manager is applied by `nixos-rebuild`).
 
+Fast-moving tools are installed outside Nix and update themselves; Nix only configures them:
+- [mise](https://mise.jdx.dev): `curl https://mise.run | sh`
+- [Copilot CLI](https://github.com/github/copilot-cli): nixpkgs pins an old release with `--no-auto-update`
+
 # Usage
 ## Making system changes
 1. Modify the `~/.config/nix-config` config files
@@ -46,6 +50,33 @@ To update the entire system:
 To update an individual input, such as home-manager:
 1. `nix flake update home-manager`
 2. `sudo nixos-rebuild switch`
+
+## Secrets
+Secrets live in `secrets/*.sops.yaml`, encrypted with [sops](https://github.com/getsops/sops) and decrypted at activation by [sops-nix](https://github.com/Mic92/sops-nix) (`home/alex/features/secrets`).
+Recipients in `.sops.yaml` are YubiKey-held age identities ([age-plugin-yubikey](https://github.com/str4d/age-plugin-yubikey)), so no private key ever exists on disk:
+
+- The YubiKey that lives in a machine gets a touch-only (`--pin-policy never`) identity so sops-nix can decrypt at login; touch the key when it blinks.
+- Spare YubiKeys get PIN + touch identities; they're for editing and recovery.
+- `~/.config/sops/age/keys.txt` is managed per profile and only holds identity stubs (they point at a YubiKey slot, they can't decrypt).
+
+Edit a secret (touch the YubiKey; unset `SOPS_CONFIG`/`SOPS_AGE_KEY_FILE` if another repo's mise env sets them):
+```bash
+sops secrets/copilot.sops.yaml
+```
+
+Add a YubiKey or machine:
+```bash
+age-plugin-yubikey --generate --pin-policy once --touch-policy cached --name nix-config  # `never` for a key that stays in a machine
+age-plugin-yubikey --identity --slot <n>   # stub for that profile's keys.txt
+# add the recipient to .sops.yaml, then re-encrypt (needs an existing key):
+sops updatekeys secrets/*.sops.yaml
+```
+To use a spare YubiKey (no stored stub needed; it's read from the key):
+```bash
+age-plugin-yubikey --identity --slot 1 > /tmp/spare.txt
+SOPS_AGE_KEY_FILE=/tmp/spare.txt sops secrets/copilot.sops.yaml; rm /tmp/spare.txt
+```
+YubiKey FIPS models can't be used: age-plugin-yubikey needs a TDES management key, which FIPS approved mode forbids ([#92](https://github.com/str4d/age-plugin-yubikey/issues/92)).
 
 ## Debugging
 If you encounter an error when applying changes you can get more detailed error messages with:

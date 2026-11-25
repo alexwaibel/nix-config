@@ -1,2 +1,5 @@
 result
 result-*
+
+# Plaintext copies made by the VS Code SOPS extension
+.decrypted~*
