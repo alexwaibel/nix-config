@@ -1,14 +1,9 @@
 # This file (and the global directory) holds config used on all hosts
-{ inputs, outputs, ... }:
 {
   imports = [
-    ./fish.nix
+    ./locale.nix
     ./nix.nix
   ];
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-    };
-  };
+  nixpkgs.config = import ../../../shared/nixpkgs-config.nix;
 }

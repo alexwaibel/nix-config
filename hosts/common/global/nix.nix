@@ -1,17 +1,5 @@
-{ ... }:
 {
-  nix = {
-    settings = {
-      experimental-features = [
-        "nix-command"
-        "flakes"
-      ];
-    };
-    optimise.automatic = true;
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 2w";
-    };
-  };
+  imports = [ ../../../shared/nix.nix ];
+
+  nix.optimise.automatic = true;
 }

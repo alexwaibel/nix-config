@@ -1,18 +1,13 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, ... }:
 {
   imports = [
     ../common/global
-    ../common/optional/nixos
     ../common/optional/wsl.nix
     ../common/users/alex
   ];
 
   networking.hostName = "desktop-wsl";
+  wsl.defaultUser = "alex";
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # This value determines the NixOS release from which the default

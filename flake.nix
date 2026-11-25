@@ -53,9 +53,27 @@
         system:
         import nixpkgs {
           inherit system;
-          config.allowUnfree = true;
+          config = import ./shared/nixpkgs-config.nix;
         }
       );
+      mkHost =
+        name:
+        lib.nixosSystem {
+          modules = [ ./hosts/${name} ];
+          specialArgs = { inherit inputs outputs; };
+        };
+      # Standalone home-manager for non-NixOS machines.
+      # NixOS hosts get home-manager through hosts/common/users/alex instead.
+      mkHome =
+        name:
+        lib.homeManagerConfiguration {
+          modules = [
+            ./home/alex/${name}.nix
+            ./home/alex/standalone.nix
+          ];
+          pkgs = pkgsFor.x86_64-linux;
+          extraSpecialArgs = { inherit inputs outputs; };
+        };
       treefmtFor = lib.genAttrs (import systems) (
         system:
         treefmt-nix.lib.evalModule pkgsFor.${system} {
@@ -89,46 +107,17 @@
 
       nixosConfigurations = {
         # Devbox VM
-        devbox = lib.nixosSystem {
-          modules = [ ./hosts/devbox ];
-          specialArgs = { inherit inputs outputs; };
-        };
-
+        devbox = mkHost "devbox";
         # Media center mini PC
-        media-center = lib.nixosSystem {
-          modules = [ ./hosts/media-center ];
-          specialArgs = { inherit inputs outputs; };
-        };
-
+        media-center = mkHost "media-center";
         # Desktop WSL
-        desktop-wsl = lib.nixosSystem {
-          modules = [ ./hosts/desktop-wsl ];
-          specialArgs = { inherit inputs outputs; };
-        };
+        desktop-wsl = mkHost "desktop-wsl";
       };
 
-      # Standalone home-manager for non-NixOS machines.
-      # NixOS hosts get home-manager through hosts/common/users/alex instead.
       homeConfigurations = {
-        # fedora - home-manager standalone
-        "alex@fedora" = lib.homeManagerConfiguration {
-          modules = [
-            ./home/alex/fedora.nix
-            ./home/alex/nixpkgs.nix
-          ];
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-        };
-
-        # Pop!_OS (COSMIC) - home-manager standalone
-        "alex@pop-os" = lib.homeManagerConfiguration {
-          modules = [
-            ./home/alex/pop-os.nix
-            ./home/alex/nixpkgs.nix
-          ];
-          pkgs = pkgsFor.x86_64-linux;
-          extraSpecialArgs = { inherit inputs outputs; };
-        };
+        "alex@fedora" = mkHome "fedora";
+        # Pop!_OS (COSMIC)
+        "alex@pop-os" = mkHome "pop-os";
       };
     };
 }

@@ -4,7 +4,7 @@ keys:
   - &yubikey_nfc_a age1yubikey1qw2fd4y7msrz3qtzr5mrl6nqqk7gdpf5d4hmceq006qghxk8kzvd7zt74jm # 5C NFC 24781147, PIN + touch
   - &yubikey_nfc_b age1yubikey1qff7g2acsy0wl9m7vuzmqut09dag8vw8cqskaafapwz4fddep9jdgq6nku4 # 5C NFC 24781393, PIN + touch
 creation_rules:
-  - path_regex: secrets/[^/]+\.sops\.ya?ml$
+  - path_regex: \.sops\.ya?ml$
     key_groups:
       - age:
           - *yubikey_nano

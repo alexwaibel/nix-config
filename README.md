@@ -1,6 +1,29 @@
 # nix-config
 My personal nix config using [flakes](https://nixos.wiki/wiki/Flakes) and [home-manager](https://nix-community.github.io/home-manager/). Works with both NixOS and standalone Nix.
 
+## 📂 Directories
+
+```sh
+📁 nix-config
+├── 📁 hosts            # 🖥️ NixOS system config
+│   ├── 📁 common
+│   │   ├── 📁 global   # every host
+│   │   ├── 📁 optional # opt-in per host
+│   │   └── 📁 users    # users + home-manager integration
+│   └── 📁 <hostname>   # one per NixOS machine
+├── 📁 home/alex        # 🏠 home-manager user config
+│   ├── 📁 global       # every profile
+│   ├── 📁 features     # opt-in per profile
+│   ├── 📄 <hostname>.nix
+│   └── 📄 standalone.nix # non-NixOS machines only
+└── 📁 shared           # 🤝 settings both sides have options for
+```
+
+### ⚖️ NixOS vs home-manager
+
+- 🖥️ **`hosts/`**: anything that needs root or affects the whole machine: boot, hardware, system services (sshd, docker, pipewire), users, locale, the nix daemon, desktop sessions.
+- 🏠 **`home/`**: your user environment, the same on every machine: shell, CLI tools, editors, git, ssh client, dotfiles, desktop preferences. Rule of thumb: if standalone home-manager can do it, it goes here.
+
 # Setup
 ## Prerequisites
 Install Nix, either standalone or with NixOS.
@@ -14,7 +37,7 @@ Install Nix, either standalone or with NixOS.
 5. `sudo ln -s ~/.config/nix-config /etc/nixos`
 6. `sudo nixos-rebuild switch --flake .#<hostname>`
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > If you face issues with the switch command, make sure your hardware config is good.
 > You can generate the config for your current hardware with `nixos-generate-config` and compare.
 
@@ -52,7 +75,7 @@ To update an individual input, such as home-manager:
 2. `sudo nixos-rebuild switch`
 
 ## Secrets
-Secrets live in `secrets/*.sops.yaml`, encrypted with [sops](https://github.com/getsops/sops) and decrypted at activation by [sops-nix](https://github.com/Mic92/sops-nix) (`home/alex/features/secrets`).
+Secrets live in `*.sops.yaml` files next to the module that uses them (e.g. `home/alex/features/copilot/secrets.sops.yaml`), encrypted with [sops](https://github.com/getsops/sops) and decrypted at activation by [sops-nix](https://github.com/Mic92/sops-nix) (`home/alex/features/secrets`).
 Recipients in `.sops.yaml` are YubiKey-held age identities ([age-plugin-yubikey](https://github.com/str4d/age-plugin-yubikey)), so no private key ever exists on disk:
 
 - The YubiKey that lives in a machine gets a touch-only (`--pin-policy never`) identity so sops-nix can decrypt at login; touch the key when it blinks.
@@ -61,7 +84,7 @@ Recipients in `.sops.yaml` are YubiKey-held age identities ([age-plugin-yubikey]
 
 Edit a secret (touch the YubiKey; unset `SOPS_CONFIG`/`SOPS_AGE_KEY_FILE` if another repo's mise env sets them):
 ```bash
-sops secrets/copilot.sops.yaml
+sops home/alex/features/copilot/secrets.sops.yaml
 ```
 
 Add a YubiKey or machine:
@@ -69,12 +92,12 @@ Add a YubiKey or machine:
 age-plugin-yubikey --generate --pin-policy once --touch-policy cached --name nix-config  # `never` for a key that stays in a machine
 age-plugin-yubikey --identity --slot <n>   # stub for that profile's keys.txt
 # add the recipient to .sops.yaml, then re-encrypt (needs an existing key):
-sops updatekeys secrets/*.sops.yaml
+git ls-files '*.sops.yaml' | xargs -n1 sops updatekeys -y
 ```
 To use a spare YubiKey (no stored stub needed; it's read from the key):
 ```bash
 age-plugin-yubikey --identity --slot 1 > /tmp/spare.txt
-SOPS_AGE_KEY_FILE=/tmp/spare.txt sops secrets/copilot.sops.yaml; rm /tmp/spare.txt
+SOPS_AGE_KEY_FILE=/tmp/spare.txt sops home/alex/features/copilot/secrets.sops.yaml; rm /tmp/spare.txt
 ```
 YubiKey FIPS models can't be used: age-plugin-yubikey needs a TDES management key, which FIPS approved mode forbids ([#92](https://github.com/str4d/age-plugin-yubikey/issues/92)).
 

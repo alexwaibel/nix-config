@@ -1,12 +1,11 @@
-{ config, pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
 
     ../common/global
-    ../common/optional/nixos
     ../common/optional/docker.nix
     ../common/optional/gnome.nix
+    ../common/optional/openssh.nix
     ../common/optional/pipewire.nix
     ../common/optional/qemu-guest-agent.nix
     ../common/optional/systemd-boot.nix

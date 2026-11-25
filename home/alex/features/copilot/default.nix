@@ -28,7 +28,7 @@ in
   };
 
   sops = {
-    defaultSopsFile = ../../../../secrets/copilot.sops.yaml;
+    defaultSopsFile = ./secrets.sops.yaml;
     secrets = {
       home_assistant_url = { };
       # Long-lived access token: OAuth refresh failures count as failed logins and can get the IP banned
