@@ -1,4 +1,13 @@
 {
+  # Sync clipboard between OS and Neovim; providers live on nvim's PATH only
+  programs.nixvim.clipboard = {
+    register = "unnamedplus";
+    providers = {
+      wl-copy.enable = true;
+      xclip.enable = true;
+    };
+  };
+
   programs.nixvim.opts = {
     # Make line numbers default
     number = true;
@@ -8,9 +17,6 @@
 
     # Don't show the mode, it's already in the status line
     showmode = false;
-
-    # Sync clipboard between OS and Neovim
-    clipboard = "unnamedplus";
 
     # Enable break indent
     breakindent = true;

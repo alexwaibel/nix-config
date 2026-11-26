@@ -105,8 +105,6 @@
       nixosConfigurations = {
         # Devbox VM
         devbox = mkHost "devbox";
-        # Media center mini PC
-        media-center = mkHost "media-center";
         # Desktop WSL
         desktop-wsl = mkHost "desktop-wsl";
       };

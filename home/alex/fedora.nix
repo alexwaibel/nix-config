@@ -2,6 +2,7 @@
   imports = [
     ./global
     ./features/dev
+    ./features/hardware
     ./features/desktop/common
   ];
 

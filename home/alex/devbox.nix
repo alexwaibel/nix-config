@@ -2,7 +2,7 @@
   imports = [
     ./global
     ./features/dev
-    ./features/desktop/gnome
+    ./features/desktop/common
   ];
 
   # This value determines the home Manager release that your

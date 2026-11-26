@@ -19,9 +19,7 @@
     l = "ls -CF";
   };
 
-  home.packages =
-    with pkgs;
-    [
+  home.packages = with pkgs; [
       # archives
       zip
       xz
@@ -42,9 +40,6 @@
       socat # replacement of openbsd-netcat
       nmap # A utility for network discovery and security auditing
 
-      # editors
-      vim
-
       # misc
       file
       which
@@ -55,7 +50,6 @@
       gawk
       zstd
       gnupg
-      xclip
       wget
       curl
       fastfetch
@@ -73,18 +67,10 @@
       btop # replacement of htop/nmon
       iftop # network monitoring
       lsof # list open files
-      pciutils # lspci
-    ]
-    ++ (pkgs.lib.optionals pkgs.stdenv.isLinux [
-      libgcc
+
       iotop # io monitoring
       strace # system call monitoring
       ltrace # library call monitoring
-
-      # system tools
       sysstat
-      lm_sensors # for `sensors` command
-      ethtool
-      usbutils # lsusb
-    ]);
+    ];
 }

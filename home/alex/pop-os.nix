@@ -4,6 +4,7 @@
     ./global
     ./features/copilot
     ./features/dev
+    ./features/hardware
   ];
 
   # YubiKey 5C Nano 15037147 (lives in this laptop), "nix-config" slot. Identity stub, not a secret:
