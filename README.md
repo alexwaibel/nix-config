@@ -58,7 +58,7 @@ On the target:
 
 From this repo on a machine with Nix:
 1. `nix develop`
-2. `read -rsp 'LUKS passphrase: ' luks; echo` (save it in Bitwarden; it stays enrolled as the recovery unlock)
+2. Choose a LUKS passphrase and save it in Bitwarden (it unlocks the first boots and stays enrolled for recovery). Enter it into a shell variable, which only lives in this shell, so run step 3 in the same terminal: `read -rsp 'LUKS passphrase: ' luks; echo`
 3. Install, stopping before the reboot:
    ```bash
    nixos-anywhere --flake .#<hostname> --target-host root@<ip> \
