@@ -9,6 +9,7 @@
     ../common/optional/cosmic.nix
     ../common/optional/pipewire.nix
     ../common/optional/secure-boot.nix
+    ../common/optional/yubikey.nix
     ../common/users/alex
   ];
 
