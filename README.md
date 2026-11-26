@@ -54,7 +54,7 @@ Hosts with a `disk-config.nix` (e.g. `p14s`) are installed remotely with [nixos-
 
 On the target:
 1. In the firmware settings, put Secure Boot in Setup Mode (ThinkPad: Security > Secure Boot > Reset to Setup Mode), then boot the [NixOS minimal ISO](https://nixos.org/download/#nixos-iso)
-2. `passwd` to set a temporary root password, and note the IP from `ip a`
+2. Connect to the network (`nmcli device wifi connect "<SSID>" --ask`, or `nmtui`), then `sudo passwd` to set a temporary root password and note the IP from `ip -br a`
 
 From this repo on a machine with Nix:
 1. `nix develop`
