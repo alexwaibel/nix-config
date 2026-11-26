@@ -103,14 +103,11 @@
       });
 
       nixosConfigurations = {
-        # Devbox VM
-        devbox = mkHost "devbox";
         # Desktop WSL
         desktop-wsl = mkHost "desktop-wsl";
       };
 
       homeConfigurations = {
-        "alex@fedora" = mkHome "fedora";
         # Pop!_OS (COSMIC)
         "alex@pop-os" = mkHome "pop-os";
       };

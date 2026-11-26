@@ -20,57 +20,57 @@
   };
 
   home.packages = with pkgs; [
-      # archives
-      zip
-      xz
-      unzip
-      p7zip
+    # archives
+    zip
+    xz
+    unzip
+    p7zip
 
-      # utils
-      ripgrep # recursively searches directories for a regex pattern
-      jq # A lightweight and flexible command-line JSON processor
-      yq-go # yaml processor https://github.com/mikefarah/yq
-      fzf # A command-line fuzzy finder
+    # utils
+    ripgrep # recursively searches directories for a regex pattern
+    jq # A lightweight and flexible command-line JSON processor
+    yq-go # yaml processor https://github.com/mikefarah/yq
+    fzf # A command-line fuzzy finder
 
-      # networking tools
-      mtr # A network diagnostic tool
-      iperf3
-      dnsutils # `dig` + `nslookup`
-      ldns # replacement of `dig`, it provide the command `drill`
-      socat # replacement of openbsd-netcat
-      nmap # A utility for network discovery and security auditing
+    # networking tools
+    mtr # A network diagnostic tool
+    iperf3
+    dnsutils # `dig` + `nslookup`
+    ldns # replacement of `dig`, it provide the command `drill`
+    socat # replacement of openbsd-netcat
+    nmap # A utility for network discovery and security auditing
 
-      # misc
-      file
-      which
-      tree
-      gnumake
-      gnused
-      gnutar
-      gawk
-      zstd
-      gnupg
-      wget
-      curl
-      fastfetch
-      nnn # terminal file manager
+    # misc
+    file
+    which
+    tree
+    gnumake
+    gnused
+    gnutar
+    gawk
+    zstd
+    gnupg
+    wget
+    curl
+    fastfetch
+    nnn # terminal file manager
 
-      # nix related
-      #
-      # it provides the command `nom` works just like `nix`
-      # with more details log output
-      nix-output-monitor
+    # nix related
+    #
+    # it provides the command `nom` works just like `nix`
+    # with more details log output
+    nix-output-monitor
 
-      # productivity
-      glow # markdown previewer in terminal
+    # productivity
+    glow # markdown previewer in terminal
 
-      btop # replacement of htop/nmon
-      iftop # network monitoring
-      lsof # list open files
+    btop # replacement of htop/nmon
+    iftop # network monitoring
+    lsof # list open files
 
-      iotop # io monitoring
-      strace # system call monitoring
-      ltrace # library call monitoring
-      sysstat
-    ];
+    iotop # io monitoring
+    strace # system call monitoring
+    ltrace # library call monitoring
+    sysstat
+  ];
 }
