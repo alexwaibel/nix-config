@@ -25,6 +25,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     systems = {
       url = "github:nix-systems/default";
     };
@@ -97,6 +109,7 @@
           packages = [
             pkgs.git
             pkgs.nix
+            pkgs.nixos-anywhere
             home-manager.packages.${pkgs.stdenv.hostPlatform.system}.home-manager
           ];
         };
@@ -105,6 +118,8 @@
       nixosConfigurations = {
         # Desktop WSL
         desktop-wsl = mkHost "desktop-wsl";
+        # ThinkPad P14s Gen 3 (Intel)
+        p14s = mkHost "p14s";
       };
 
       homeConfigurations = {

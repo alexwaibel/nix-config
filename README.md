@@ -45,6 +45,40 @@ Install Nix, either standalone or with NixOS.
 > If using NixOS-WSL follow [these docs](https://nix-community.github.io/NixOS-WSL/how-to/change-username.html)
 > instead of running `sudo nixos-rebuild switch`. Otherwise the non-default username will lead to a broken install.
 
+### New bare-metal NixOS machine (nixos-anywhere)
+Hosts with a `disk-config.nix` (e.g. `p14s`) are installed remotely with [nixos-anywhere](https://github.com/nix-community/nixos-anywhere):
+[disko](https://github.com/nix-community/disko) partitions the disk and [nixos-facter](https://github.com/nix-community/nixos-facter) writes `hosts/<hostname>/facter.json` in place of `hardware-configuration.nix`.
+
+> [!CAUTION]
+> This wipes the target's disk.
+
+On the target:
+1. In the firmware settings, put Secure Boot in Setup Mode (ThinkPad: Security > Secure Boot > Reset to Setup Mode), then boot the [NixOS minimal ISO](https://nixos.org/download/#nixos-iso)
+2. `passwd` to set a temporary root password, and note the IP from `ip a`
+
+From this repo on a machine with Nix:
+1. `nix develop`
+2. `read -rsp 'LUKS passphrase: ' luks; echo` (save it in Bitwarden; it stays enrolled as the recovery unlock)
+3. Install, stopping before the reboot:
+   ```bash
+   nixos-anywhere --flake .#<hostname> --target-host root@<ip> \
+     --generate-hardware-config nixos-facter hosts/<hostname>/facter.json \
+     --disk-encryption-keys /tmp/secret.key <(printf %s "$luks") \
+     --phases kexec,disko,install
+   ```
+4. Set your user password, then reboot: `ssh -t root@<ip> 'nixos-enter --root /mnt -c "passwd alex" && reboot'`
+5. Commit `hosts/<hostname>/facter.json`
+
+On first boot (unlock with the passphrase), [lanzaboote](https://github.com/nix-community/lanzaboote) generates Secure Boot keys in `/var/lib/sbctl` and reboots;
+systemd-boot then enrolls them (with Microsoft's, for option ROMs) and Secure Boot is enforced. Confirm with `sudo sbctl status`.
+
+Then enroll TPM2 + PIN for everyday unlock; the passphrase stays enrolled for recovery.
+TPM2 binds to PCR 7 (Secure Boot state), so enroll it only after Secure Boot is on, and re-enroll if a firmware or key change breaks it:
+```bash
+sudo systemd-cryptenroll --tpm2-device=auto --tpm2-with-pin=yes --tpm2-pcrs=7 /dev/disk/by-partlabel/disk-main-luks
+```
+Then clone the repo to `~/.config/nix-config` and follow the NixOS steps above for later changes.
+
 ### Standalone (non-NixOS, e.g. Pop!_OS)
 1. Clone the repo. You can use `nix-shell -p git` to launch a shell with `git` installed
 2. `nix --extra-experimental-features 'nix-command flakes' develop`
