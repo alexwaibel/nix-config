@@ -30,8 +30,7 @@ in
 
   programs.github-copilot-cli = {
     enable = true;
-    # Self-updating install outside Nix; nixpkgs pins an old release with --no-auto-update
-    package = null;
+    package = pkgs.callPackage ./package.nix { };
   };
 
   sops = {

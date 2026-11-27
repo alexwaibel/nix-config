@@ -87,9 +87,9 @@ Then clone the repo to `~/.config/nix-config` and follow the NixOS steps above f
 After the first switch, `home-manager` is installed and flakes are enabled, so use
 `home-manager switch --flake .` (on NixOS hosts home-manager is applied by `nixos-rebuild`).
 
-Fast-moving tools are installed outside Nix and update themselves; Nix only configures them:
+Fast-moving tools update themselves; Nix only bootstraps and configures them:
 - [mise](https://mise.jdx.dev): `curl https://mise.run | sh`
-- [Copilot CLI](https://github.com/github/copilot-cli): nixpkgs pins an old release with `--no-auto-update`
+- [Copilot CLI](https://github.com/github/copilot-cli): installed by home-manager from its self-contained binary (`home/alex/features/copilot/package.nix`), which downloads updates into `~/.cache/copilot/pkg`. nixpkgs' package can't self-update.
 
 # Usage
 ## Making system changes
